@@ -1,9 +1,11 @@
 # NoCodeAIML
-No Code AI/ML platform
+No Code AI/ML platform - Community Edition
 
+Typical No Code AI/ML Platform will have features like drag and drop, data source connectivity, social media analysis, analytics, and content analysis.No code AI/ML platform can be built using python and streamlit, which helps in images analysis. The analytical data in the no-code AI/ML platform is imported, validated, cleansed, trained, and testing of the model. New scenarios come in due to unseen data and the model is refined for predictive analytics.
 
-Monte carlo simulations  in finance industry using quantum computer
-Monte Carlo Quant is an open source project initiated by researchers at Quantica to lay the foundations for a platform which nurtures the development of quantum computation packages aimed at the speed up of simulations in computational finance. 
+Planning to add more features, please contribute.
+
+check out my article on AI4 blog [No Code AI/ML Platform](https://ai4.io/blog/2021/06/07/no-code-ai-ml-platform)
 
 
 ![alt text](https://github.com/bhagvank/arc/blob/master/nocodeaiml.jpg)
