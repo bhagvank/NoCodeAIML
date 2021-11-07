@@ -1,6 +1,11 @@
 # NoCodeAIML
 No Code AI/ML platform - Community Edition
 
+[![Watch the video credits: Uday Kiran](https://github.com/bhagvank/arc/blob/master/nocodeaiml_demo.jpg)](https://youtu.be/-jZTHuB2OOg)
+
+Video credits: Uday Kiran
+
+
 Typical No Code AI/ML Platform will have features like drag and drop, data source connectivity, social media analysis, analytics, and content analysis.No code AI/ML platform can be built using python and streamlit, which helps in images analysis. The analytical data in the no-code AI/ML platform is imported, validated, cleansed, trained, and testing of the model. New scenarios come in due to unseen data and the model is refined for predictive analytics.
 
 Planning to add more features, please contribute.
