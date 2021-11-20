@@ -7,78 +7,84 @@ import plotly.express as px
 import altair as alt
 from bokeh.plotting import figure
 
-
-def matplotlib_plot(chart_type: str, df):
+def matplotlib_plot(chart_type: str, df,category,chart_x,chart_y,chart_z):
     """ return matplotlib plots """
 
+    Xlable = chart_x
+    Ylable = chart_y
+    Zlable = chart_z
     fig, ax = plt.subplots()
     if chart_type == "Scatter":
         with st.echo():
-            df["color"] = df["species"].replace(
+            df["color"] = df[category].replace(
                 {"Adelie": 1, "Chinstrap": 2, "Gentoo": 3}
             )
-            ax.scatter(x=df["bill_depth_mm"], y=df["bill_length_mm"], c=df["color"])
+            ax.scatter(x=df[Xlable], y=df[Ylable], c=df["color"])
             plt.title("Bill Depth by Bill Length")
-            plt.xlabel("Bill Depth (mm)")
-            plt.ylabel("Bill Length (mm)")
+            plt.xlabel(Xlable)
+            plt.ylabel(Ylable)
     elif chart_type == "Histogram":
         with st.echo():
             plt.title("Count of Bill Depth Observations")
-            ax.hist(df["bill_depth_mm"])
-            plt.xlabel("Bill Depth (mm)")
+            ax.hist(df[Xlable])
+            plt.xlabel(Xlable)
             plt.ylabel("Count")
     elif chart_type == "Bar":
         with st.echo():
-            df_plt = df.groupby("species", dropna=False).mean().reset_index()
-            ax.bar(x=df_plt["species"], height=df_plt["bill_depth_mm"])
+            df_plt = df.groupby(category, dropna=False).mean().reset_index()
+            ax.bar(x=df_plt[Xlable], height=df_plt[Ylable])
             plt.title("Mean Bill Depth by Species")
-            plt.xlabel("Species")
-            plt.ylabel("Mean Bill Depth (mm)")
+            plt.xlabel(Xlable)
+            plt.ylabel(Ylable)
 
     elif chart_type == "Line":
         with st.echo():
-            ax.plot(df.index, df["bill_length_mm"])
+            ax.plot(df.index, df[Ylable])
             plt.title("Bill Length Over Time")
-            plt.ylabel("Bill Length (mm)")
+            plt.ylabel(Ylable)
     elif chart_type == "3D Scatter":
         ax = fig.add_subplot(projection="3d")
         with st.echo():
-            df["color"] = df["species"].replace(
+            df["color"] = df[category].replace(
                 {"Adelie": 1, "Chinstrap": 2, "Gentoo": 3}
             )
             ax.scatter3D(
-                xs=df["bill_depth_mm"],
-                ys=df["bill_length_mm"],
-                zs=df["body_mass_g"],
+                xs=df[Xlable],
+                ys=df[Ylable],
+                zs=df[Zlable],
                 c=df["color"],
             )
-            ax.set_xlabel("bill_depth_mm")
-            ax.set_ylabel("bill_length_mm")
-            ax.set_zlabel("body_mass_g")
+            ax.set_xlabel(Xlable)
+            ax.set_ylabel(Ylable)
+            ax.set_zlabel(Zlable)
             plt.title("3D Scatterplot")
     return fig
 
 
-def sns_plot(chart_type: str, df):
+def sns_plot(chart_type: str, df, category,chart_x,chart_y,chart_z):
     """ return seaborn plots """
 
+    Xlable = chart_x
+    Ylable = chart_y
+    Zlable = chart_z
+    
     fig, ax = plt.subplots()
     if chart_type == "Scatter":
         with st.echo():
             sns.scatterplot(
                 data=df,
-                x="bill_depth_mm",
-                y="bill_length_mm",
-                hue="species",
+                x=Xlable,
+                y=Ylable,
+                hue=category,
             )
             plt.title("Bill Depth by Bill Length")
     elif chart_type == "Histogram":
         with st.echo():
-            sns.histplot(data=df, x="bill_depth_mm")
+            sns.histplot(data=df, x=Xlable)
             plt.title("Count of Bill Depth Observations")
     elif chart_type == "Bar":
         with st.echo():
-            sns.barplot(data=df, x="species", y="bill_depth_mm")
+            sns.barplot(data=df, x=Xlable, y=Ylable)
             plt.title("Mean Bill Depth by Species")
     elif chart_type == "Boxplot":
         with st.echo():
@@ -86,7 +92,7 @@ def sns_plot(chart_type: str, df):
             plt.title("Bill Depth Observations")
     elif chart_type == "Line":
         with st.echo():
-            sns.lineplot(data=df, x=df.index, y="bill_length_mm")
+            sns.lineplot(data=df, x=df.index, y=Ylable)
             plt.title("Bill Length Over Time")
     elif chart_type == "3D Scatter":
         st.write("Seaborn doesn't do 3D ☹️. Here's 2D.")
@@ -95,63 +101,69 @@ def sns_plot(chart_type: str, df):
     return fig
 
 
-def plotly_plot(chart_type: str, df):
+def plotly_plot(chart_type: str, df, category,chart_x,chart_y,chart_z):
     """ return plotly plots """
-
+    
+    Xlable = chart_x
+    Ylable = chart_y
+    Zlable = chart_z
     if chart_type == "Scatter":
         with st.echo():
             fig = px.scatter(
                 data_frame=df,
-                x="bill_depth_mm",
-                y="bill_length_mm",
-                color="species",
+                x= Xlable,
+                y= Ylable,
+                color= category,
                 title="Bill Depth by Bill Length",
             )
     elif chart_type == "Histogram":
         with st.echo():
             fig = px.histogram(
                 data_frame=df,
-                x="bill_depth_mm",
+                x= Xlable,
                 title="Count of Bill Depth Observations",
             )
     elif chart_type == "Bar":
         with st.echo():
             fig = px.histogram(
                 data_frame=df,
-                x="species",
-                y="bill_depth_mm",
+                x= Xlable,
+                y= Ylable,
                 title="Mean Bill Depth by Species",
                 histfunc="avg",
             )
             # by default shows stacked bar chart (sum) with individual hover values
     elif chart_type == "Boxplot":
         with st.echo():
-            fig = px.box(data_frame=df, x="species", y="bill_depth_mm")
+            fig = px.box(data_frame=df, x= Xlable, y=Ylable)
     elif chart_type == "Line":
         with st.echo():
             fig = px.line(
                 data_frame=df,
                 x=df.index,
-                y="bill_length_mm",
+                y= Ylable,
                 title="Bill Length Over Time",
             )
     elif chart_type == "3D Scatter":
         with st.echo():
             fig = px.scatter_3d(
                 data_frame=df,
-                x="bill_depth_mm",
-                y="bill_length_mm",
-                z="body_mass_g",
-                color="species",
+                x= Xlable,
+                y= Ylable,
+                z= Zlable,
+                color= category,
                 title="Interactive 3D Scatterplot!",
             )
 
     return fig
 
 
-def altair_plot(chart_type: str, df):
+def altair_plot(chart_type: str, df, category,chart_x,chart_y,chart_z):
     """ return altair plots """
 
+    Xlable = chart_x
+    Ylable = chart_y
+    Zlable = chart_z
     if chart_type == "Scatter":
         with st.echo():
             fig = (
@@ -160,7 +172,7 @@ def altair_plot(chart_type: str, df):
                     title="Bill Depth by Bill Length",
                 )
                 .mark_point()
-                .encode(x="bill_depth_mm", y="bill_length_mm", color="species")
+                .encode(x= Xlable, y= Ylable, color= category)
                 .interactive()
             )
     elif chart_type == "Histogram":
@@ -168,31 +180,31 @@ def altair_plot(chart_type: str, df):
             fig = (
                 alt.Chart(df, title="Count of Bill Depth Observations")
                 .mark_bar()
-                .encode(alt.X("bill_depth_mm", bin=True), y="count()")
+                .encode(alt.X(Xlable, bin=True), y="count()")
                 .interactive()
             )
     elif chart_type == "Bar":
         with st.echo():
             fig = (
                 alt.Chart(
-                    df.groupby("species", dropna=False).mean().reset_index(),
+                    df.groupby(category, dropna=False).mean().reset_index(),
                     title="Mean Bill Depth by Species",
                 )
                 .mark_bar()
-                .encode(x="species", y="bill_depth_mm")
+                .encode(x= Xlable, y= Ylable)
                 .interactive()
             )
     elif chart_type == "Boxplot":
         with st.echo():
             fig = (
-                alt.Chart(df).mark_boxplot().encode(x="species:O", y="bill_depth_mm:Q")
+                alt.Chart(df).mark_boxplot().encode(x=Xlable, y=Ylable)
             )
     elif chart_type == "Line":
         with st.echo():
             fig = (
                 alt.Chart(df.reset_index(), title="Bill Length Over Time")
                 .mark_line()
-                .encode(x="index:T", y="bill_length_mm:Q")
+                .encode(x="index:T", y=Ylable)
                 .interactive()
             )
     elif chart_type == "3D Scatter":
@@ -206,50 +218,53 @@ def altair_plot(chart_type: str, df):
     return fig
 
 
-def pd_plot(chart_type: str, df):
+def pd_plot(chart_type: str, df, category,chart_x,chart_y,chart_z):
     """ return pd matplotlib plots """
 
+    Xlable = chart_x
+    Ylable = chart_y
+    Zlable = chart_z
     fig, ax = plt.subplots()
     if chart_type == "Scatter":
         with st.echo():
-            df["color"] = df["species"].replace(
+            df["color"] = df[category].replace(
                 {"Adelie": "blue", "Chinstrap": "orange", "Gentoo": "green"}
             )
             ax_save = df.plot(
                 kind="scatter",
-                x="bill_depth_mm",
-                y="bill_length_mm",
-                c="color",
+                x= Xlable,
+                y= Ylable,
+                c= "color",
                 ax=ax,
                 title="Bill Depth by Bill Length",
             )
     elif chart_type == "Histogram":
         with st.echo():
-            ax_save = df["bill_depth_mm"].plot(
+            ax_save = df[Xlable].plot(
                 kind="hist", ax=ax, title="Count of Bill Depth Observations"
             )
-            plt.xlabel("Bill Depth (mm)")
+            plt.xlabel(Xlable)
     elif chart_type == "Bar":
         with st.echo():
             ax_save = (
-                df.groupby("species", dropna=False)
+                df.groupby(category, dropna=False)
                 .mean()
                 .plot(
                     kind="bar",
-                    y="bill_depth_mm",
+                    y=Ylable,
                     title="Mean Bill Depth by Species",
                     ax=ax,
                 )
             )
-            plt.ylabel("Bill Depth (mm)")
+            plt.ylabel(Ylable)
     elif chart_type == "Boxplot":
         with st.echo():
             ax_save = df.plot(kind="box", ax=ax)
     elif chart_type == "Line":
         with st.echo():
-            ax_save = df.plot(kind="line", use_index=True, y="bill_length_mm", ax=ax)
+            ax_save = df.plot(kind="line", use_index=True, y=Ylable, ax=ax)
             plt.title("Bill Length Over Time")
-            plt.ylabel("Bill Length (mm)")
+            plt.ylabel(Ylable)
     elif chart_type == "3D Scatter":
         st.write("Pandas doesn't do 3D ☹️. Here's 2D.")
         ax_save = df.plot(kind="scatter", x="bill_depth_mm", y="bill_length_mm", ax=ax)
@@ -257,19 +272,22 @@ def pd_plot(chart_type: str, df):
     return fig
 
 
-def bokeh_plot(chart_type: str, df):
+def bokeh_plot(chart_type: str, df, category,chart_x,chart_y,chart_z):
     """ return bokeh plots """
 
+    Xlable = chart_x
+    Ylable = chart_y
+    Zlable = chart_z
     if chart_type == "Scatter":
         with st.echo():
-            df["color"] = df["species"].replace(
+            df["color"] = df[category].replace(
                 {"Adelie": "blue", "Chinstrap": "orange", "Gentoo": "green"}
             )
             fig = figure(title="Bill Depth by Bill Length")
-            fig.circle(source=df, x="bill_depth_mm", y="bill_length_mm", color="color")
+            fig.circle(source=df, x=Xlable, y=Ylable, color="color")
     elif chart_type == "Histogram":
         with st.echo():
-            hist, edges = np.histogram(df["bill_depth_mm"].dropna(), bins=10)
+            hist, edges = np.histogram(df[Xlable].dropna(), bins=10)
             fig = figure(title="Count of Bill Depth Observations")
             fig.quad(
                 top=hist, bottom=0, left=edges[:-1], right=edges[1:], line_color="white"
@@ -283,16 +301,16 @@ def bokeh_plot(chart_type: str, df):
             )
 
             fig.vbar(
-                source=df.groupby("species", dropna=False).mean(),
-                x="species",
-                top="bill_depth_mm",
+                source=df.groupby(category, dropna=False).mean(),
+                x=Xlable,
+                top=Ylable,
                 width=0.8,
             )
 
     elif chart_type == "Line":
         with st.echo():
             fig = figure(title="Bill Length Over Time", x_axis_type="datetime")
-            fig.line(source=df.reset_index(), x="index", y="bill_length_mm")
+            fig.line(source=df.reset_index(), x="index", y=Ylable)
 
     elif chart_type == "3D Scatter":
         st.write("Bokeh doesn't do 3D ☹️. Here's 2D.")
