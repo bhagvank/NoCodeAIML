@@ -397,8 +397,8 @@ def draw_a_plot():
     #else:
     with st.beta_container():
             #for lib in libs:
-            #show_plot(kind=kind,chart_type=chart_type,df=df)
-            show_plot(category,chart_x,chart_y,chart_z,kind=kind,chart_type=chart_type,df=df)   
+            show_plot(kind=kind,chart_type=chart_type,df=df)
+    
 
 
         # notes
@@ -471,25 +471,25 @@ def header(text):
 def load_data(dataset):
     return sns.load_dataset(dataset)
 
-def show_plot(category,chart_x,chart_y,chart_z,kind: str,chart_type,df):
+def show_plot(kind: str,chart_type,df):
     st.write(kind)
     if kind == "Matplotlib":
-        plot = matplotlib_plot(chart_type, df,category,chart_x,chart_y,chart_z)
+        plot = matplotlib_plot(chart_type, df)
         st.pyplot(plot)
     elif kind == "Seaborn":
-        plot = sns_plot(chart_type, df,category,chart_x,chart_y,chart_z)
+        plot = sns_plot(chart_type, df)
         st.pyplot(plot)
     elif kind == "Plotly Express":
-        plot = plotly_plot(chart_type, df,category,chart_x,chart_y,chart_z)
+        plot = plotly_plot(chart_type, df)
         st.plotly_chart(plot, use_container_width=True)
     elif kind == "Altair":
-        plot = altair_plot(chart_type, df,category,chart_x,chart_y,chart_z)
+        plot = altair_plot(chart_type, df)
         st.altair_chart(plot, use_container_width=True)
     elif kind == "Pandas Matplotlib":
-        plot = pd_plot(chart_type, df,category,chart_x,chart_y,chart_z)
+        plot = pd_plot(chart_type, df)
         st.pyplot(plot)
     elif kind == "Bokeh":
-        plot = bokeh_plot(chart_type, df,category,chart_x,chart_y,chart_z)
+        plot = bokeh_plot(chart_type, df)
         st.bokeh_chart(plot, use_container_width=True)
 
 if __name__ == "__main__":
