@@ -1,83 +1,50 @@
-# NoCodeAIML
-No Code AI/ML platform - Community Edition
+# 🎈 Streamlit + LLM Examples App
 
-[![Watch the video credits: Uday Kiran](https://github.com/bhagvank/arc/blob/master/nocodeaiml_demo.jpg)](https://youtu.be/-jZTHuB2OOg)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/streamlit/llm-examples?quickstart=1)
 
-Video credits: Uday Kiran
+Starter examples for building LLM apps with Streamlit.
 
+## Overview of the App
 
-Typical No Code AI/ML Platform will have features like drag and drop, data source connectivity, social media analysis, analytics, and content analysis.No code AI/ML platform can be built using python and streamlit, which helps in images analysis. The analytical data in the no-code AI/ML platform is imported, validated, cleansed, trained, and testing of the model. New scenarios come in due to unseen data and the model is refined for predictive analytics.
+This app showcases a growing collection of LLM minimum working examples.
 
-Planning to add more features, please contribute.
+Current examples include:
 
-check out my article on AI4 blog [No Code AI/ML Platform](https://ai4.io/blog/2021/06/07/no-code-ai-ml-platform)
+- Chatbot
+- File Q&A
+- Chat with Internet search
+- LangChain Quickstart
+- LangChain PromptTemplate
+- Chat with user feedback
 
+## Demo App
 
-![alt text](https://github.com/bhagvank/arc/blob/master/nocodeaiml.jpg)
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://llm-examples.streamlit.app/)
 
+### Get an OpenAI API key
 
-# Use Cases
+You can get your own OpenAI API key by following the following instructions:
 
+1. Go to https://platform.openai.com/account/api-keys.
+2. Click on the `+ Create new secret key` button.
+3. Next, enter an identifier name (optional) and click on the `Create secret key` button.
 
-    1.analyze text messages
-    2.classify shipping documents
-    3.categorize social media pictures
-    4.categorize Instagram pictures
-    5.check onboarding documents
-    6.categorize startups by description
-    7.filter startup databases for investment decisions
-    8.categorizing emails
-    9.tracking keyword engagement
-    10.social listening
-    11.categorizing app crash reports using NLP
-    12.moderate user-generated content
-    13.insurance claims identification
-    14.quality inspection
-    15.auto-tagging real estate images,
-    16.tagging email attachments
-    17.categorizing support tickets
-    18.analyze text responses of surveys
-    19.track social sentiments
-    20.categorizing SMS responses
-    21.recognize shipping documents
+### Enter the OpenAI API key in Streamlit Community Cloud
 
+To set the OpenAI API key as an environment variable in Streamlit apps, do the following:
 
-# Features
+1. At the lower right corner, click on `< Manage app` then click on the vertical "..." followed by clicking on `Settings`.
+2. This brings the **App settings**, next click on the `Secrets` tab and paste the API key into the text box as follows:
 
-    1.Data Visualization
-    2.Data Analysis
-    3.Machine Learning Algorithms
-    4.Image Analysis
-    5.NLP & NLU
-    6.WebRTC API
-    7.Drawing API
-    8.Grids for tables
-
-
-
-# Instructions for setting up locally - webapp
-1. Ensure that  python3 and streamlit
-
-  * [Python3](https://www.python.org/downloads/)
-
-  * [StreamLit](https://docs.streamlit.io/en/stable/installation.html)
-
-
-  
-  
-2.git clone this repository
-```
-git clone https://github.com/bhagvank/NoCodeAIML.git
-
-```
-   
-3. Install the required packages
-```
-pip3 install -r requirements.txt
+```sh
+OPENAI_API_KEY='xxxxxxxxxx'
 ```
 
-4. Run streamlit
-```
-streamlit run main.py
-```
+## Run it locally
 
+```sh
+virtualenv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+streamlit run Chatbot.py
+```
