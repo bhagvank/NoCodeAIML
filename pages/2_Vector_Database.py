@@ -13,11 +13,8 @@ question = st.text_input(
 )
 
 
-
-    # Get the list of all collections
 collections = list_collections()
 
-    # Print the collection names
 msgr = st.chat_message("assistant")
 
 msgr.write("Collections in Milvus:")
@@ -31,7 +28,6 @@ for collection in collections:
     
     print("collection_name",collection_name)
 
-    # Load the collection
     collection = Collection(collection_name)
     
     schema = collection.schema
@@ -46,11 +42,8 @@ for collection in collections:
     for field in schema.fields:
         fields.append(field.name)
 
-    # Retrieve all the data from the collection
-    # You might want to adjust this if your collection has a large amount of data
-    results = collection.query(expr="id >=0", output_fields=fields)  # Replace with your field names
+    results = collection.query(expr="id >=0", output_fields=fields) 
 
-    # Convert the results to a pandas DataFrame
     df = pd.DataFrame(results)
     
     st.chat_message("assistant").write("data sample :")

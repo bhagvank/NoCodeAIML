@@ -12,18 +12,11 @@ question = st.text_input(
     placeholder="Show Collections"
 )
 
-
-
-    # Get the list of all collections
 collections = list_collections()
 
-    # Print the collection names
 msgr = st.chat_message("assistant")
 
 msgr.write("Collections in Milvus:")
-#st.chat_message("assistant").write( collections)
-#msg = collections
-#st.chat_message("assistant").write(msg)
 
 
 for collection in collections:
@@ -31,26 +24,20 @@ for collection in collections:
     
     print("collection_name",collection_name)
 
-    # Load the collection
     collection = Collection(collection_name)
     
     schema = collection.schema
     
-    #print("Fields in collection:",schema.fields)
-    
-    #for field in schema.fields:
-    #    st.chat_message("assistant").write(f"Field name: {field.name}, Field type: {field.dtype}")
+
     
     fields = []
     
     for field in schema.fields:
         fields.append(field.name)
 
-    # Retrieve all the data from the collection
-    # You might want to adjust this if your collection has a large amount of data
-    results = collection.query(expr="id >=0", output_fields=fields)  # Replace with your field names
+    results = collection.query(expr="id >=0", output_fields=fields)
 
-    # Convert the results to a pandas DataFrame
+
     df = pd.DataFrame(results)
     
     st.chat_message("assistant").write("data sample :"+collection_name)

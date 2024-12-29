@@ -1,6 +1,6 @@
 from openai import OpenAI
 import streamlit as st
-TOGETHER_API_KEY= "48666fef627332bcc4c315d79903619276e1469f1d628a6193df3c0d128d50ae"
+TOGETHER_API_KEY= "xxxx"
 with st.sidebar:
     openai_api_key = st.text_input("Together AI API Key",TOGETHER_API_KEY, key="chatbot_api_key", type="default")
     

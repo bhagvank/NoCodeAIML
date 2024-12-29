@@ -12,12 +12,8 @@ question = st.text_input(
     placeholder="Show Collections"
 )
 
-
-
-    # Get the list of all collections
 collections = list_collections()
 
-    # Print the collection names
 msgr = st.chat_message("assistant")
 
 msgr.write("Collections in Milvus:")
@@ -31,7 +27,6 @@ for collection in collections:
     
     print("collection_name",collection_name)
 
-    # Load the collection
     collection = Collection(collection_name)
     
     schema = collection.schema
